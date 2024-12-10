@@ -1,0 +1,327 @@
+/* Toàn bộ popup */
+.popup {
+    display: none;  
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 380px; 
+    background-color: #1c1c1e; /* Màu nền tối */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5); 
+    z-index: 10000;
+    box-sizing: border-box;
+    animation: fadeIn 0.3s ease-out;
+    text-align: center;
+}
+/* Nền mờ */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Độ mờ tối nền */
+    z-index: 9999;
+    animation: fadeInOverlay 0.3s ease-out;
+}
+
+/* Tiêu đề */
+.popup h2 {
+    font-size: 22px;
+    color: #28a745; /* Màu xanh tiêu đề */
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Input */
+.popup input {
+    width: 90%; /* Giảm chiều rộng để nằm gọn trong khung popup */
+    max-width: 100%; /* Đảm bảo không vượt quá khung */
+    padding: 12px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #2c2c2e; /* Input nền tối */
+    color: #fff;
+    box-sizing: border-box; /* Đảm bảo padding không làm input rộng hơn */
+}
+
+/* Đảm bảo các nút và checkbox group cũng không vượt quá khung */
+.popup button, .popup .checkbox-group {
+    width: 90%; /* Đồng bộ với input */
+    max-width: 100%;
+}
+
+/* Giảm margin trên button nếu cần */
+.popup button {
+    margin-top: 10px; 
+}
+
+.popup input::placeholder {
+    color: #aaa; /* Placeholder màu nhạt */
+}
+
+.popup input:focus {
+    border: 1px solid #28a745;
+    outline: none;
+}
+
+/* Nút */
+.popup button {
+    width: 100%;
+    padding: 14px;
+    background-color: #28a745;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.popup button:hover {
+    background-color: #218838; /* Hover xanh đậm */
+}
+
+/* Đặt checkbox và nhãn trên cùng một dòng */
+.popup .checkbox-group {
+    display: flex;
+    align-items: left; 
+    justify-content: flex-start; 
+    width: 100%; 
+    margin: 10px 0;
+}
+
+/* Tùy chỉnh checkbox */
+.popup label {
+    font-size: 16px;  /* Điều chỉnh kích thước chữ */
+    color: #000;      /* Màu chữ đen */
+    display: inline-block; /* Đảm bảo label hiển thị theo dạng block, không bị ẩn */
+}
+
+/* Link hover */
+.popup a {
+    color: #28a745; 
+    text-decoration: none;
+}
+
+.popup a:hover {
+    text-decoration: underline;
+}
+
+/* Căn chỉnh lỗi nhỏ */
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Căn chỉnh thanh nav */
+nav {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    line-height: 1; /* Đảm bảo chiều cao đồng nhất */
+}
+
+nav a:hover {
+    background-color: #575757;
+    border-radius: 5px;
+}
+
+/* Thanh tìm kiếm trong nav */
+nav .search-bar {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Đẩy khung tìm kiếm sang phải */
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 20px; /* Căn chỉnh chiều cao khung với nav */
+}
+
+/* Input tìm kiếm */
+nav .search-bar input {
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    height: 100%; /* Chiều cao đầy đủ của khung */
+    flex: 1; /* Ô tìm kiếm chiếm tối đa không gian */
+    outline: none;
+}
+
+/* Nút tìm kiếm */
+nav .search-bar button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 0 15px;
+    font-size: 14px;
+    height: 200%; /* Chiều cao đầy đủ của khung */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+nav .search-bar button:hover {
+    background-color: #218838;
+}
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+button {
+    padding: 15px 30px; /* Tăng padding để nút lớn hơn */
+    font-size: 18px; /* Tăng kích thước chữ */
+    border-radius: 8px; /* Bo góc nút */
+    cursor: pointer; /* Đổi con trỏ chuột thành tay khi hover */
+    display: inline-flex; /* Đảm bảo nút và icon nằm ngang nhau */
+    align-items: center; /* Căn giữa icon và text theo chiều dọc */
+    gap: 10px; /* Khoảng cách giữa icon và text */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu nền khi hover */
+    background-color: #28a745; /* Màu nền của nút */
+    color: white; /* Màu chữ */
+    border: none; /* Không có viền */
+}
+
+.popup-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.popup img {
+    width: 100%;
+    max-height: 150px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.popup .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+/* Popup giỏ hàng */
+#cartPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1000;
+    display: none;
+}
+#cart-notification {
+    display: none; /* Ẩn mặc định */
+    position: fixed; /* Hiển thị nổi ở vị trí cố định */
+    bottom: 20px; /* Cách đáy màn hình */
+    right: 20px; /* Cách phải màn hình */
+    background-color: #4CAF50; /* Màu nền xanh lá */
+    color: white; /* Màu chữ trắng */
+    padding: 10px 20px; /* Khoảng cách nội dung */
+    border-radius: 8px; /* Bo góc */
+    font-size: 16px; /* Kích thước chữ */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Hiệu ứng đổ bóng */
+    z-index: 9999; /* Đảm bảo luôn nằm trên các phần tử khác */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Hiệu ứng mượt */
+    opacity: 0; /* Ẩn hoàn toàn khi không hiển thị */
+    transform: translateY(20px); /* Đẩy xuống một chút khi ẩn */
+}
+#cart-notification.show {
+    display: block; /* Hiển thị thông báo */
+    opacity: 1; /* Hiện hoàn toàn */
+    transform: translateY(0); /* Đưa về vị trí ban đầu */
+}
+#cartPopup .popup-content {
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+#cartPopup h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #444;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+#cartPopup #cartItems {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#cartPopup #cartItems div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 5px;
+}
+
+#cartPopup #cartItems div button {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#cartPopup #cartItems div button:hover {
+    background: #c0392b;
+}
+
+#cartPopup #totalPrice {
+    font-size: 20px;
+    color: #27ae60;
+    font-weight: bold;
+}
+
+#cartPopup button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: #3498db;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#cartPopup button:hover {
+    background: #4fdd3d;
+}

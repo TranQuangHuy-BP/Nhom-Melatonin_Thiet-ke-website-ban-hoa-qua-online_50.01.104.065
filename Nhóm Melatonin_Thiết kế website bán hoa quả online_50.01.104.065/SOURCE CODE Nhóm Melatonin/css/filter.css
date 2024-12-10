@@ -1,0 +1,71 @@
+/* Các kiểu cho bộ lọc và sản phẩm */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.filters {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: flex;                   /* Sử dụng flexbox để các phần tử con nằm trên cùng 1 hàng */
+    justify-content: space-between;  /* Chia đều khoảng cách giữa các phần tử */
+    gap: 20px;                       /* Khoảng cách giữa các bộ lọc */
+}
+
+.filter-section {
+    display: flex;                   /* Chạy các phần tử con theo hàng ngang */
+    align-items: center;             /* Căn giữa các phần tử dọc */
+    gap: 10px;                       /* Khoảng cách giữa các phần tử trong mỗi bộ lọc */
+}
+
+select {
+    padding: 8px;
+    width: 150px;                    /* Giới hạn chiều rộng của select */
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.reset-btn {
+    background-color: #f44336;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.reset-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* Các kiểu cho sản phẩm */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.product {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product h3 {
+    margin-top: 0;
+}
+
+.discount {
+    color: red;
+    font-weight: bold;
+}
+
+.no-discount {
+    color: gray;
+}

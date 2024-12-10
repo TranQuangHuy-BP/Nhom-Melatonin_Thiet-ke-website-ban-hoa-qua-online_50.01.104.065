@@ -1,0 +1,31 @@
+#carousel {
+    width: 100%; /* Chiều rộng container */
+    overflow: hidden; /* Ẩn các phần tử ngoài container */
+}
+
+.carousel-container {
+    display: flex;
+    width: 300%; /* Tạo đủ không gian để chứa ba ảnh */
+    animation: slide 9s infinite linear; /* Di chuyển liên tục */
+}
+
+.carousel-container img {
+    width: 33.33%; /* Mỗi ảnh chiếm 1/3 chiều rộng */
+    height: auto;
+    object-fit: cover; /* Đảm bảo ảnh không bị méo */
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    33% {
+        transform: translateX(-100%);
+    }
+    66% {
+        transform: translateX(-200%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}

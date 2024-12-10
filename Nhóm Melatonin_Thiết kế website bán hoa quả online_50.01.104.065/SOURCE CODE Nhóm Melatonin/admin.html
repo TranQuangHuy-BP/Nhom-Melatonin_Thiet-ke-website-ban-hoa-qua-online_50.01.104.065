@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CỬA HÀNG HOA QUẢ - Admin</title>
+    <link rel="shortcut icon" href="images/hoaqua1.png" />
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Thư viện biểu đồ -->
+</head>
+<body>
+    <header>
+        <h1>CỬA HÀNG HOA QUẢ - Admin</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#dashboard" onclick="showSection('dashboard')">Trang Chủ</a></li>
+            <li><a href="#add-product" onclick="showSection('add-product')">Sản Phẩm</a></li>
+            <li><a href="#orders" onclick="showSection('orders')">Đơn Hàng</a></li>
+            <li><a href="#customers" onclick="showSection('customers')">Khách Hàng</a></li>
+        </ul>
+    </nav>
+    <main>
+        <!-- Trang chủ -->
+        <section id="dashboard" class="admin-section">
+           <h2>Biểu đồ số lượng sản phẩm đã bán</h2>
+           <canvas id="salesChart" width="400" height="200"></canvas>
+        </section>
+
+        <!-- Quản lý sản phẩm -->
+        <section id="add-product" class="admin-section" style="display: none;">
+            <h2>Thêm sản phẩm mới</h2>
+            <form id="addProductForm">
+                <label for="productName">Tên sản phẩm:</label>
+                <input type="text" id="productName" name="productName" required>
+
+                <label for="productDescription">Mô tả sản phẩm:</label>
+                <textarea id="productDescription" name="productDescription" required></textarea>
+
+                <label for="productPrice">Giá sản phẩm:</label>
+                <input type="number" id="productPrice" name="productPrice" required>
+
+                <label for="productOrigin">Xuất xứ:</label>
+                <input type="text" id="productOrigin" name="productOrigin" required>
+
+                <label for="productImage">Chọn ảnh sản phẩm:</label>
+                <input type="file" id="productImage" name="productImage" accept="image/png, image/jpeg" required>
+
+                <button type="submit">Thêm sản phẩm</button>
+            </form>
+        </section>
+
+        <!-- Đơn hàng -->
+        <section id="orders" class="admin-section" style="display: none;">
+            <h2>Thống kê đơn hàng</h2>
+            <div id="orderStats">
+                <p><strong>Số lượng sản phẩm đã bán:</strong> <span id="totalSold">0</span></p>
+                <p><strong>Doanh thu:</strong> <span id="totalRevenue">0</span> VND</p>
+            </div>
+        </section>
+
+        <!-- Khách hàng -->
+        <section id="customers" class="admin-section" style="display: none;">
+            <h2>Danh sách khách hàng</h2>
+            <ul id="customerList">
+                <!-- Khách hàng sẽ được hiển thị tại đây -->
+            </ul>
+        </section>
+    </main>
+    <script>
+        document.getElementById('addProductForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const productName = document.getElementById('productName').value;
+            const productDescription = document.getElementById('productDescription').value;
+            const productPrice = document.getElementById('productPrice').value;
+            const productOrigin = document.getElementById('productOrigin').value;
+            const productImage = document.getElementById('productImage').files[0];
+
+            if (!productName || !productDescription || !productPrice || !productOrigin || !productImage) {
+                alert('Vui lòng điền đầy đủ thông tin!');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                const newProduct = {
+                    name: productName,
+                    description: productDescription,
+                    price: parseInt(productPrice),
+                    origin: productOrigin,
+                    image: reader.result // URL tạm thời của ảnh
+                };
+
+                // Lưu sản phẩm vào localStorage
+                saveProductToLocalStorage(newProduct);
+
+                alert('Sản phẩm đã được thêm!');
+                document.getElementById('addProductForm').reset();
+            };
+            reader.readAsDataURL(productImage);
+        });
+
+        function saveProductToLocalStorage(product) {
+            let products = JSON.parse(localStorage.getItem('products')) || [];
+            products.push(product);
+            localStorage.setItem('products', JSON.stringify(products));
+        }
+    </script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

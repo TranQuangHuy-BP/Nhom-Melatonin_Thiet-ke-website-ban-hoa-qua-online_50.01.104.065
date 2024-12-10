@@ -1,0 +1,128 @@
+/* Các phần chung cho trang web */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+}
+
+nav {
+    background-color: #333;
+    overflow: hidden;
+}
+
+nav a {
+    float: left;
+    display: block;
+    color: white;
+    padding: 14px 20px;
+    text-align: center;
+    text-decoration: none;
+}
+
+nav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.search-bar {
+    padding: 10px;
+    width: 300px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.account-cart {
+    float: right;
+    padding: 15px;
+}
+
+.account-cart a {
+    color: white;
+    margin-right: 20px;
+}
+
+/* Quảng cáo tự động chạy */
+#carousel {
+    width: 100%; /* Đảm bảo carousel chiếm toàn bộ chiều rộng của phần tử cha */
+    overflow: hidden; /* Ẩn những phần ảnh vượt quá khung */
+    margin-top: 20px;
+}
+
+.carousel-container {
+    display: flex;
+    transition: transform 1s ease-in-out;
+    width: 100%;
+}
+
+.carousel-container img {
+    width: 100%; /* Đảm bảo ảnh luôn chiếm toàn bộ chiều rộng của khung */
+    height: 300px; /* Cố định chiều cao của ảnh */
+    object-fit: contain; /* Điều chỉnh ảnh sao cho vừa khung mà không bị mất phần nào */
+    margin-right: 10px; /* Khoảng cách giữa các ảnh */
+}
+
+/* Căn chỉnh tiêu đề h2 */
+h2 {
+    text-align: center;  /* Căn giữa tiêu đề */
+    margin-top: 30px; /* Khoảng cách trên */
+}
+
+/* Hiển thị các sản phẩm theo dạng grid */
+#products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Sắp xếp các sản phẩm thành các cột, tự động thay đổi số lượng cột tùy vào kích thước màn hình */
+    gap: 20px;  /* Khoảng cách giữa các sản phẩm */
+    margin-top: 20px;
+}
+
+/* Hiển thị sản phẩm */
+.product {
+    border: 1px solid #ddd; /* Đường viền của mỗi sản phẩm */
+    padding: 15px;  /* Khoảng cách trong của sản phẩm */
+    text-align: center;
+    border-radius: 8px;  /* Bo góc cho sản phẩm */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  /* Đổ bóng nhẹ cho sản phẩm */
+}
+
+/* Căn chỉnh hình ảnh sản phẩm */
+.product img {
+    width: 100%;  /* Làm cho ảnh chiếm toàn bộ chiều rộng của phần tử cha */
+    height: 200px;  /* Cố định chiều cao của ảnh */
+    object-fit: cover;  /* Đảm bảo ảnh sẽ được bao phủ toàn bộ không gian mà không bị méo */
+    border-radius: 8px;  /* Bo góc ảnh */
+}
+
+/* Nút Thêm vào giỏ */
+.add-to-cart {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.add-to-cart:hover {
+    background-color: #218838;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

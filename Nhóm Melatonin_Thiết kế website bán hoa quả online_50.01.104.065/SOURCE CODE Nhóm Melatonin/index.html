@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cửa hàng hoa quả</title>
+    <link rel="shortcut icon" href="images/hoaqua1.png" />
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/button.css">
+    <link rel="stylesheet" href="css/popup.css">
+    <link rel="stylesheet" href="css/filter.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <script src="js/popup.js"></script>
+    <header> <h1>CỬA HÀNG HOA QUẢ</h1> </header>
+<nav>
+    <a href="index.html"><i class="fas fa-home"></i> Trang chủ</a>
+    <a href="news.html"><i class="fas fa-newspaper"></i> Tin tức</a>
+    <a href="recruitment.html"><i class="fas fa-briefcase"></i> Tuyển dụng</a>
+    <a href="about.html"><i class="fas fa-info-circle"></i> Giới thiệu</a>
+    <a href="warranty.html"><i class="fas fa-shield-alt"></i> Bảo hành</a>
+    <a href="contact.html"><i class="fas fa-phone-alt"></i> Liên hệ</a>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm...">
+        <button onclick="searchProducts()">
+            <i class="fas fa-search"></i> <!-- Icon tìm kiếm -->
+        </button>
+    </div>
+            <button onclick="viewCart()"><i class="fas fa-shopping-cart"></i>Giỏ Hàng (<span id="cart-count">0</span>)</button>
+    </nav>
+    <div class="auth-buttons">
+            <button id="loginButton" onclick="openLoginPopup()"><i class="fas fa-sign-in-alt"></i>Đăng Nhập</button>
+            <button id="registerButton" onclick="openRegisterPopup()"><i class="fas fa-user-plus"></i>Đăng Ký</button>
+            <button id="logoutButton" onclick="openLogoutPopup()" style="display: none;"><i class="fas fa-sign-out-alt"></i>Đăng Xuất</button>
+    </div>    
+<!-- Popup Đăng Nhập -->
+<div id="loginPopup" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup('loginPopup')">&times;</span>
+        <h2>Đăng Nhập</h2>
+        <input type="text" id="loginUsername" placeholder="Tên đăng nhập">
+        <input type="password" id="loginPassword" placeholder="Mật khẩu">
+        <!-- Checkbox lưu tên đăng nhập -->
+        <div>
+            <input type="checkbox" id="rememberMe"> <label for="rememberMe">Lưu tên đăng nhập</label>
+        </div>
+
+        <button onclick="login()">Đăng Nhập</button>
+        <div id="loginError" class="error" style="display:none;"></div> <!-- Hiển thị lỗi -->
+    </div>
+</div>
+<!-- Popup Đăng Ký -->
+<div id="registerPopup" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup('registerPopup')">&times;</span>
+        <h2>Đăng Ký</h2>
+        <form>
+            <label for="registerUsername">Tên đăng nhập:</label>
+            <input type="text" id="registerUsername" placeholder="Nhập tên đăng nhập">
+            
+            <label for="registerEmail">Email:</label>
+            <input type="email" id="registerEmail" placeholder="Nhập email">
+            
+            <label for="registerPassword">Mật khẩu:</label>
+            <input type="password" id="registerPassword" placeholder="Nhập mật khẩu">
+            
+            <label for="confirmPassword">Xác nhận mật khẩu:</label>
+            <input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu">
+            
+            <button type="button" onclick="register()">Đăng Ký</button>
+        </form>
+    </div>
+</div>
+
+<!-- Popup Đăng Xuất -->
+<div id="logoutPopup" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup('logoutPopup')">&times;</span>
+        <h2>Bạn có muốn đăng xuất?</h2>
+        <button onclick="confirmLogout()">Đồng ý</button>
+        <button onclick="closePopup('logoutPopup')">Hủy</button>
+    </div>
+</div>
+<!-- Popup giỏ hàng -->
+<div id="cartPopup" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup('cartPopup')">&times;</span>
+        <h2>Giỏ Hàng</h2>
+        <div id="cartItems"></div>
+        <div>
+            <label for="shippingAddress">Địa chỉ nhận hàng:</label>
+            <input type="text" id="shippingAddress" required>
+        </div>
+        <p>Tổng tiền: <span id="totalPrice">0</span> VND</p>
+
+        <!-- Nút thanh toán -->
+        <button onclick="purchase()">Mua hàng</button>
+    </div>
+</div>
+<!-- Popup thông tin sản phẩm -->
+<div id="productDetailPopup" class="popup" style="display: none;">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup('productDetailPopup')">&times;</span>
+        <h2 id="productTitle">Thông tin sản phẩm</h2>
+        <img id="productImage" src="" alt="Sản phẩm" />
+        <p id="productDescription">Mô tả sản phẩm</p>
+        <p id="productOrigin">Xuất xứ: Việt Nam</p>
+        <p id="productPrice">Giá: 0 VND</p>
+    </div>
+</div>
+
+    <section id="carousel">
+        <h2>Khuyến mãi</h2>
+        <div class="carousel-container" id="carousel">
+            <img src="images/QC1.jpg" alt="Khuyến mãi 1">
+            <img src="images/QC2.jpg" alt="Khuyến mãi 2">
+            <img src="images/QC3.jpg" alt="Khuyến mãi 3">
+        </div>
+    </section>
+
+    <div class="filters">
+        <h2>Lựa chọn phù hợp</h2>
+        <div class="filter-section">
+            <label for="price">Giá sản phẩm:</label>
+            <select id="price" name="price">
+                <option value="all">Tất cả</option>
+                <option value="under50k">Dưới 50 nghìn</option>
+                <option value="50k-100k">50-100 nghìn</option>
+                <option value="100k-200k">100-200 nghìn</option>
+            </select>
+        </div>
+        <div class="filter-section">
+            <label for="sort">Sắp xếp:</label>
+            <select id="sort" name="sort">
+                <option value="default">Mặc định</option>
+                <option value="price-asc">Giá tăng dần</option>
+                <option value="price-desc">Giá giảm dần</option>
+            </select>
+        </div>
+        <div class="filter-section">
+            <label for="discount">Khuyến mãi:</label>
+            <select id="discount" name="discount">
+                <option value="all">Tất cả</option>
+                <option value="discounted">Giảm giá</option>
+                <option value="no-discount">Không khuyến mãi</option>
+            </select>
+        </div>
+        <!-- Thêm nút Đặt lại -->
+        <button id="resetFilters" class="reset-btn">Khôi phục</button>
+    </div>
+
+    <h2>Danh mục sản phẩm</h2>
+    <section id="products">
+        <div class="product" data-price="30000" data-discount="true">
+            <img src="images/chuoi.jpg" alt="Chuối" onclick="showProductDetail('Chuối', 'images/chuoi.jpg','CChuối chín vàng, thơm ngon, da mịn, quả đều', 'Việt Nam', '30,000 VND')" />
+            <h3>Chuối</h3>
+            <p class="price">30,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Chuối" data-price="30000">Thêm vào giỏ</button>
+        </div>
+
+        <div class="product" data-price="60000" data-discount="true">
+            <img src="images/tao.jpg" alt="Táo" onclick="showProductDetail('Táo','images/tao.jpg','Táo giòn ngọt, mọng nước, tươi tự nhiên, chất lượng cao','Việt Nam','60,000 VND')"/>
+            <h3>Táo</h3>
+            <p class="price">60,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Táo" data-price="60000">Thêm vào giỏ</button>
+        </div>
+
+        <div class="product" data-price="50000" data-discount="true">
+            <img src="images/cam.jpg" alt="Cam" onclick="showProductDetail('Cam','images/cam.jpg','Cam mọng nước, ngọt dịu, tươi ngon, giàu vitamin','Việt Nam','50,000 VND')"/>
+            <h3>Cam</h3>
+            <p class="price">50,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Cam" data-price="50000">Thêm vào giỏ</button>
+        </div>
+
+        <div class="product" data-price="80000" data-discount="false">
+            <img src="images/nho.webp" alt="Nho" onclick="showProductDetail('Nho','images/nho.webp','Nho tươi, ngọt thanh, mọng nước, giòn ngon, chất lượng cao','Việt Nam','80,000 VND')"/>
+            <h3>Nho</h3>
+            <p class="price">80,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="no-discount">Không khuyến mãi</p>
+            <button class="add-to-cart" data-product="Nho" data-price="80000">Thêm vào giỏ</button>
+        </div>
+
+        <div class="product" data-price="60000" data-discount="true">
+            <img src="images/bo.jpg" alt="Bơ" onclick="showProductDetail('Bơ','images/bo.jpg','Bơ sáp béo ngậy, dẻo mịn, thơm ngon, chất lượng cao','Việt Nam','60,000 VND')"/>
+            <h3>Bơ</h3>
+            <p class="price">60,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Bơ" data-price="60000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="75000" data-discount="false">
+            <img src="images/buoi.jpg" alt="Bưởi" onclick="showProductDetail('Bưởi','images/buoi.jpg','Bưởi da xanh, ngọt thanh, mọng nước, thơm ngon, chất lượng cao','Việt Nam','75,000 VND')"/>
+            <h3>Bưởi</h3>
+            <p class="price">75,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="no-discount">Không khuyến mãi</p>
+            <button class="add-to-cart" data-product="Bưởi" data-price="75000">Thêm vào giỏ</button>
+        </div>
+        
+        <div class="product" data-price="50000" data-discount="false">
+            <img src="images/thanhlong.jpg" alt="Thanh long" onclick="showProductDetail('Thanh long','images/thanhlong.jpg','Thanh long ruột đỏ, ngọt dịu, mọng nước, tươi ngon','Việt Nam','50,000 VND')"/>
+            <h3>Thanh long</h3>
+            <p class="price">50,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="no-discount">Không khuyến mãi</p>
+            <button class="add-to-cart" data-product="Thanh long" data-price="50000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="65000" data-discount="true">
+            <img src="images/traile.jpg" alt="Lê" onclick="showProductDetail('Lê','images/traile.jpg','Lê giòn ngọt, mọng nước, tươi tự nhiên, dinh dưỡng cao','Việt Nam','65,000 VND')"/>
+            <h3>Lê</h3>
+            <p class="price">65,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Lê" data-price="65000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="35000" data-discount="true">
+            <img src="images/xoai.jpg" alt="Xoài" onclick="showProductDetail('Xoài','images/xoai.jpg','Xoài chín vàng, ngọt lịm, thơm tự nhiên, chất lượng cao','Việt Nam','35,000 VND')"/>
+            <h3>Xoài</h3>
+            <p class="price">35,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Xoài" data-price="35000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="90000" data-discount="true">
+            <img src="images/cherry.jpg" alt="cherry" onclick="showProductDetail('Cherry','images/cherry.jpg','Cherry đỏ mọng, ngọt thanh, tươi ngon, chất lượng cao','Việt Nam','90,000 VND')"/>
+            <h3>Cherry</h3>
+            <p class="price">90,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Cherry" data-price="90000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="25000" data-discount="true">
+            <img src="images/cachua.jpg" alt="cachua" onclick="showProductDetail('Cà chua','images/cachua.jpg','Cà chua đỏ tươi, mọng nước, vỏ mịn, quả tròn, chất lượng cao','Việt Nam','25,000 VND')"/>
+            <h3>Cà chua</h3>
+            <p class="price">25,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Cà chua" data-price="25000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="50000" data-discount="true">
+            <img src="images/chomchom.jpg" alt="chomchom" onclick="showProductDetail('Chôm chôm','images/chomchom.jpg','Chôm chôm vỏ đỏ, lông dài, trái tròn, thịt ngọt, mọng nước, chất lượng cao','Việt Nam','50,000 VND')"/>
+            <h3>Chôm chôm</h3>
+            <p class="price">50,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Chôm chôm" data-price="50000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="60000" data-discount="true">
+            <img src="images/dao.jpg" alt="dao" onclick="showProductDetail('Đào','images/dao.jpg','Đào vỏ mịn, màu hồng tươi, thịt ngọt, mọng nước, chất lượng cao','Việt Nam','60,000 VND')"/>
+            <h3>Đào</h3>
+            <p class="price">60,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Đào" data-price="60000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="75000" data-discount="true">
+            <img src="images/dautay.jpg" alt="dautay" onclick="showProductDetail('Dâu tây','images/dautay.jpg','Dâu tây đỏ tươi, quả mọng, ngọt lịm, mọc ở vùng lạnh, chất lượng cao','Việt Nam','75,000 VND')"/>
+            <h3>Dâu tây</h3>
+            <p class="price">75,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Dâu tây" data-price="75000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="35000" data-discount="true">
+            <img src="images/duahau.webp" alt="duahau" onclick="showProductDetail('Dưa hấu','images/duahau.webp','Dưa hấu vỏ xanh, ruột đỏ, hạt đen, ngọt mát, chất lượng cao','Việt Nam','35,000 VND')"/>
+            <h3>Dưa hấu</u></h3>
+            <p class="price">35,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Dưa hấu" data-price="35000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="80000" data-discount="false">
+            <img src="images/dualuoi.jpg" alt="dualuoi" onclick="showProductDetail('Dưa lưới','images/dualuoi.jpg','Dưa lưới vỏ vàng, lưới rõ, thịt ngọt, giòn, mọng nước, chất lượng cao','Việt Nam','80,000 VND')"/>
+            <h3>Dưa lưới</h3>
+            <p class="price">80,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="no-discount">Không khuyến mãi</p>
+            <button class="add-to-cart" data-product="Dưa lưới" data-price="80000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="55000" data-discount="true">
+            <img src="images/kiwi.jpg" alt="kiwi" onclick="showProductDetail('Kiwi','images/kiwi.jpg','Kiwi vỏ nâu, lông mịn, thịt xanh, hạt đen, chua ngọt','New Zealand','55,000 VND')"/>
+            <h3>Kiwi</h3>
+            <p class="price">55,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Kiwi" data-price="55000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="40000" data-discount="true">
+            <img src="images/nhan.jpg" alt="nhan" onclick="showProductDetail('Nhãn','images/nhan.jpg','Nhãn vỏ mỏng, màu nâu vàng, cùi trắng, ngọt thanh, chất lượng cao','Việt Nam','40,000 VND')"/>
+            <h3>Nhãn</h3>
+            <p class="price">40,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Nhãn" data-price="40000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="35000" data-discount="true">
+            <img src="images/quyt.jpg" alt="quyt" onclick="showProductDetail('Quýt','images/quyt.jpg','Quýt vỏ mỏng, màu cam tươi, múi ngọt, mọng nước, chất lượng cao','Việt Nam','35,000 VND')"/>
+            <h3>Quýt</h3>
+            <p class="price">35,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Quýt" data-price="35000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="120000" data-discount="true">
+            <img src="images/saurieng.jpg" alt="saurieng" onclick="showProductDetail('Sầu riêng','images/saurieng.jpg','NSầu riêng vỏ gai, màu xanh vàng, thịt ngọt béo, mùi đặc trưng, chất lượng cao','Việt Nam','120,000 VND')"/>
+            <h3>Sầu riêng</h3>
+            <p class="price">120,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Sầu riêng" data-price="120000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="25000" data-discount="false">
+            <img src="images/thom.jpg" alt="thom" onclick="showProductDetail('Thơm (Dứa)','images/thom.jpg','Thơm (dứa) vỏ gai, màu vàng, thịt ngọt, chua nhẹ, mọng nước, chất lượng cao','Việt Nam','25,000 VND')"/>
+            <h3>Thơm (Dứa)</h3>
+            <p class="price">25,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="no-discount">Không khuyến mãi</p>
+            <button class="add-to-cart" data-product="Thơm" data-price="25000">Thêm vào giỏ</button>
+        </div>
+        <div class="product" data-price="60000" data-discount="true">
+            <img src="images/vietquoc.jpg" alt="vietquoc" onclick="showProductDetail('Việt quốc','images/vietquoc.jpg','Việt quốc vỏ mỏng, màu đỏ tươi, thịt ngọt, mọng nước, chất lượng cao','Việt Nam','60,000 VND')"/>
+            <h3>Việt quốc</h3>
+            <p class="price">60,000 VND</p>
+            <div class="rating">⭐⭐⭐⭐</div>
+            <p class="discount">Giảm giá</p>
+            <button class="add-to-cart" data-product="Việt quốc" data-price="60000">Thêm vào giỏ</button>
+        </div>
+    </section>
+    <script src="js/capnhat.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/filter.js"></script>
+    <script src="js/productdetail.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/popup.js"></script>
+    <div id="cart-notification">ĐÃ THÊM VÀO GIỎ HÀNG</div>
+
+    <footer>
+        <p>&copy; 2024 Cửa hàng trái cây - Tất cả quyền lợi được bảo lưu</p>
+    </footer>
+
+</body>
+</html>
